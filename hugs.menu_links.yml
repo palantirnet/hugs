@@ -1,0 +1,10 @@
+hugs.page:
+  title: Hugs
+  description: 'Show hugs from one person to another'
+  route_name: hugs.hug
+
+hugs.config:
+  title: 'Hugs configuration'
+  description: 'Configure the hugs system'
+  route_name: hugs.config
+  parent: system.admin_config_system
