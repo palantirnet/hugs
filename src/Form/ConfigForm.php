@@ -10,10 +10,12 @@ class ConfigForm extends ConfigFormBase {
   }
 
   public function buildForm(array $form, array &$form_state) {
+    $config = $this->config('hugs.settings');
+
     $form['default_count'] = [
       '#type' => 'number',
       '#title' => $this->t('Default hug count'),
-      '#default_value' => $this->config('hugs.settings')->get('default_count'),
+      '#default_value' => $config->get('default_count'),
     ];
 
     return parent::buildForm($form, $form_state);
