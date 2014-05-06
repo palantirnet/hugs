@@ -1,0 +1,4 @@
+services:
+  hugs.hug_tracker:
+    class: Drupal\hugs\HugTracker
+    arguments: ['@state']

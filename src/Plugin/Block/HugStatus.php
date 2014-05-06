@@ -3,6 +3,9 @@
 namespace Drupal\hugs\Plugin\Block;
 
 use Drupal\block\BlockBase;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\hugs\HugTracker;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Reports on hugability status.
@@ -13,7 +16,24 @@ use Drupal\block\BlockBase;
  *   category = @Translation("System")
  * )
  */
-class HugStatus extends BlockBase {
+class HugStatus extends BlockBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * @var \Drupal\hugs\HugTracker
+   */
+  protected $hugTracker;
+
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, HugTracker $hugTracker) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->hugTracker = $hugTracker;
+  }
+
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration, $plugin_id, $plugin_definition,
+      $container->get('hugs.hug_tracker')
+    );
+  }
 
   public function defaultConfiguration() {
     return array('enabled' => 1);
@@ -34,9 +54,14 @@ class HugStatus extends BlockBase {
   }
 
   public function build() {
-    $message = $this->configuration['enabled']
-      ? $this->t('Now accepting hugs')
-      : $this->t('No hugs :-(');
+    if ($this->configuration['enabled']) {
+      $message = $this->t('%to was the last person hugged', [
+        '%to' => $this->hugTracker->getLastRecipient()
+      ]);
+    }
+    else {
+      $message = $this->t('No hugs :-(');
+    }
     return [
       '#markup' => $message,
     ];
