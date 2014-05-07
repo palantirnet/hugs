@@ -13,3 +13,9 @@ hugs.config:
     _title: 'Hug configuration'
   requirements:
     _permission: 'configure hugs'
+hugs.node:
+  path: /node/{node}/hug
+  defaults:
+    _content: 'Drupal\hugs\Controller\HugsController::nodeHug'
+  requirements:
+    _permission: 'access content'

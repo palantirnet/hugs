@@ -55,8 +55,8 @@ class HugStatus extends BlockBase implements ContainerFactoryPluginInterface {
 
   public function build() {
     if ($this->configuration['enabled']) {
-      $message = $this->t('%to was the last person hugged', [
-        '%to' => $this->hugTracker->getLastRecipient()
+      $message = $this->t('@to was the last person hugged', [
+        '@to' => $this->hugTracker->getLastRecipient()
       ]);
     }
     else {
