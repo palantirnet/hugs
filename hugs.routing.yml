@@ -6,6 +6,7 @@ hugs.hug:
     count: 0
   requirements:
     _permission: 'access content'
+    count: \d+
 hugs.config:
   path: /admin/config/system/hugs
   defaults:
