@@ -3,13 +3,14 @@
 namespace Drupal\hugs\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
+use Drupal\Core\Form\FormStateInterface;
 
 class ConfigForm extends ConfigFormBase {
   public function getFormId() {
     return 'hug_config';
   }
 
-  public function buildForm(array $form, array &$form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('hugs.settings');
 
     $form['default_count'] = [
@@ -21,10 +22,11 @@ class ConfigForm extends ConfigFormBase {
     return parent::buildForm($form, $form_state);
   }
 
-  public function submitForm(array &$form, array &$form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
+
     $config = $this->config('hug.settings');
-    $config->set('default_count', $form_state['values']['default_count']);
+    $config->set('default_count', $form_state->getValue('default_count'));
     $config->save();
   }
 }

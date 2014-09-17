@@ -13,7 +13,7 @@ hugs.config:
     _form: 'Drupal\hugs\Form\ConfigForm'
     _title: 'Hug configuration'
   requirements:
-    _permission: 'configure hugs'
+    _permission: 'configure_hugs'
 hugs.node:
   path: /node/{node}/hug
   defaults:

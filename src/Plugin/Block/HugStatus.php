@@ -2,7 +2,9 @@
 
 namespace Drupal\hugs\Plugin\Block;
 
-use Drupal\block\BlockBase;
+
+use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\hugs\HugTracker;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -36,10 +38,10 @@ class HugStatus extends BlockBase implements ContainerFactoryPluginInterface {
   }
 
   public function defaultConfiguration() {
-    return array('enabled' => 1);
+    return ['enabled' => 1];
   }
 
-  public function blockForm($form, &$form_state) {
+  public function blockForm($form, FormStateInterface $form_state) {
     $form['enabled'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Hugging enabled'),
@@ -49,8 +51,8 @@ class HugStatus extends BlockBase implements ContainerFactoryPluginInterface {
     return $form;
   }
 
-  public function blockSubmit($form, &$form_state) {
-    $this->configuration['enabled'] = (bool)$form_state['values']['enabled'];
+  public function blockSubmit($form, FormStateInterface $form_state) {
+    $this->configuration['enabled'] = (bool)$form_state->getValue('enabled');
   }
 
   public function build() {

@@ -5,18 +5,9 @@
  */
 function hugs_theme() {
   $theme['hug_page'] = [
-    'variables' => array('from' => NULL, 'to' => NULL, 'count' => NULL),
+    'variables' => ['from' => NULL, 'to' => NULL, 'count' => NULL],
     'template' => 'hug_page',
   ];
 
   return $theme;
 }
-
-function hugs_permission() {
-  $perms['configure hugs'] = [
-    'title' => t('Configure the hugs system'),
-  ];
-
-  return $perms;
-}
-

@@ -1,0 +1,3 @@
+'configure_hugs':
+  title: 'Configure the hugs system'
+  description: 'Configure default hug count'
