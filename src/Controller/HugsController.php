@@ -28,13 +28,8 @@ class HugsController extends ControllerBase {
       $body = $node->body->value;
       $body = $node->body[0]->value;
 
-      // Replaces check_markup()
-      [
-        '#type' => 'processed_text',
-        '#text' => $body,
-        '#format' => $node->body->format,
-      ];
-      $formatted = check_markup($body, $node->body->format);
+      // But we really want...
+      $formatted = $node->body->processed;
 
       $terms = [];
       foreach ($node->field_tags as $tag) {
