@@ -25,7 +25,7 @@ class ConfigForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
 
-    $config = $this->config('hug.settings');
+    $config = $this->config('hugs.settings');
     $config->set('default_count', $form_state->getValue('default_count'));
     $config->save();
   }
