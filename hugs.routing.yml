@@ -1,7 +1,7 @@
 hugs.hug:
   path: /hug/{from}/{to}/{count}
   defaults:
-    _content: 'Drupal\hugs\Controller\HugsController::hug'
+    _controller: 'Drupal\hugs\Controller\HugsController::hug'
     _title: 'Hug!'
     count: 0
   requirements:
@@ -17,6 +17,6 @@ hugs.config:
 hugs.node:
   path: /node/{node}/hug
   defaults:
-    _content: 'Drupal\hugs\Controller\HugsController::nodeHug'
+    _controller: 'Drupal\hugs\Controller\HugsController::nodeHug'
   requirements:
     _permission: 'access content'
