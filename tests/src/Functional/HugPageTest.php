@@ -58,6 +58,12 @@ class HugPageTest extends BrowserTestBase {
 
   /**
    * @see testHugPage
+   *
+   * Note: dataProvider methods in PHPUnit are super-duper-useful and can
+   * greatly reduce test maintenance.  However, in BrowserTestBase each provider
+   * line below will result in its own isolated test, and therefore isolated
+   * install of Drupal. Beware of the performance impact of too many browser
+   * tests.
    */
   public function hugAttemptProvider() {
     return [
