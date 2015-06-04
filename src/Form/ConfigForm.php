@@ -29,4 +29,8 @@ class ConfigForm extends ConfigFormBase {
     $config->set('default_count', $form_state->getValue('default_count'));
     $config->save();
   }
+
+  public function getEditableConfigNames() {
+    return ['hugs.settings'];
+  }
 }
