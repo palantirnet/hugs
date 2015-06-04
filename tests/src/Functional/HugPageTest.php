@@ -77,9 +77,29 @@ class HugPageTest extends BrowserTestBase {
     $account = $this->drupalCreateUser(['configure_hugs']);
     $this->drupalLogin($account);
 
-    // Visit a Drupal page that requires login.
     $this->drupalGet('/admin/config/system/hugs');
     $this->assertSession()->statusCodeEquals(200);
+
+    // This is the fancier way of checking and manipulating the result.
+    // The $session_checks object is pure Mink, no Drupal.
+    $session_checks = $this->assertSession();
+    $session_checks->statusCodeEquals(200);
+    $session_checks->elementExists('css', 'form#hug-config');
+    $session_checks->fieldExists('default_count');
+
+    // We could use the $page object to "click" links, and do anything else
+    // supported by Mink: http://mink.behat.org/en/latest/guides/manipulating-pages.html
+    // $page = $this->getSession()->getPage();
+
+    // Now submit the form.
+    $edit = ['default_count' => 5];
+    $this->submitForm($edit, 'Save configuration', 'hug-config');
+
+    // Sadly we have to hit the container directly in order to verify that
+    // the data was saved to configuration. Ah well.
+    $config_factory = $this->container->get('config.factory');
+    $value = $config_factory->get('hugs.settings')->get('default_count');
+    $this->assertSame(5, $value);
   }
 
   /**
