@@ -11,6 +11,9 @@ use Drupal\simpletest\BrowserTestBase;
  * Tests the Hug page.
  *
  * @group Hug
+ *
+ * // These two tags are apparently required to make BrowserTests run correctly.
+ *
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
@@ -65,6 +68,30 @@ class HugPageTest extends BrowserTestBase {
       [NULL, NULL, NULL, 404],
       ['Larry', 'Dries', 'many', 404],
     ];
+  }
+
+  /**
+   * Verify that a user with the right permission can access the config form.
+   */
+  public function testAdminFormAccess() {
+    $account = $this->drupalCreateUser(['configure_hugs']);
+    $this->drupalLogin($account);
+
+    // Visit a Drupal page that requires login.
+    $this->drupalGet('/admin/config/system/hugs');
+    $this->assertSession()->statusCodeEquals(200);
+  }
+
+  /**
+   * Verify that a user without the right permission cannot access the form.
+   */
+  public function testAdminFormNoAccess() {
+    $account = $this->drupalCreateUser();
+    $this->drupalLogin($account);
+
+    // Without the right permission, this should 403.
+    $this->drupalGet('/admin/config/system/hugs');
+    $this->assertSession()->statusCodeEquals(403);
   }
 
 }
